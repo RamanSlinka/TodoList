@@ -1,0 +1,27 @@
+.App {
+  padding: 30px;
+  display: flex;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+
+.is-done {
+  opacity: 0.5;
+ text-decoration: line-through;
+}
+
+.activity {
+  background-color: aquamarine ;
+}
+
+.error {
+  border: 1px solid red;
+  outline: transparent;
+
+}
+
+.error-message {
+  color: red;
+}
