@@ -1,6 +1,8 @@
 import {TaskStateType, TodolistType} from "../App";
 import {v1} from "uuid";
-import {AddTodoListActionType, RemoveTodoListActionType} from "./todolists-reducer";
+// @ts-ignore
+import {AddTodoListActionType, RemoveTodoListActionType} from "./TodoLists-reducer";
+
 
 
 type removeTaskActionType = {
