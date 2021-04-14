@@ -1,6 +1,6 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from "react";
+import React, {useState, KeyboardEvent, ChangeEvent, useCallback} from "react";
 import {FilterValuesType, TaskType} from "./App";
-import AddItemForm from "./AddItemForm";
+import {AddItemForm} from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
@@ -20,19 +20,19 @@ type TodolistPropsType = {
     changeTodoListTitle: (newTitle: string, todoListID: string) => void
 }
 
-export function Todolist(props: TodolistPropsType) {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+    console.log('Todolist clicked')
 
     const addTask = (title: string) => props.addTask(title, props.id)
     const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id)
-    const setAllFilter = () => {
-        props.changeTodoListFilter('all', props.id)
-    }
-    const setActiveFilter = () => {
-        props.changeTodoListFilter('active', props.id)
-    }
-    const setCompletedFilter = () => {
-        props.changeTodoListFilter('completed', props.id)
-    }
+
+    const setAllFilter = useCallback(
+        () => { props.changeTodoListFilter('all', props.id)}, [])
+    const setActiveFilter = useCallback(
+        () => { props.changeTodoListFilter('active', props.id) }, [])
+    const setCompletedFilter = useCallback(
+        () => { props.changeTodoListFilter('completed', props.id)}, [])
+
     const removeTodoList = () => props.removeTodolist(props.id)
     const tasks = props.tasks.map(t => {
         const removeTask = () => {
@@ -44,6 +44,9 @@ export function Todolist(props: TodolistPropsType) {
 
         const changeTaskTitle = (newTitle: string) =>
             props.changeTaskTitle(t.id, newTitle, props.id)
+
+
+
 
         return (
             <li key={t.id} className={t.isDone ? "is-done" : ''}>
@@ -67,6 +70,16 @@ export function Todolist(props: TodolistPropsType) {
             </li>
         )
     })
+
+
+    let tasksForTodolist = props.tasks
+    if (props.filter === 'active') {
+        tasksForTodolist = props.tasks.filter(t => t.isDone === false)
+    }
+    if (props.filter === 'completed') {
+        tasksForTodolist = props.tasks.filter(t => t.isDone === true)
+    }
+
     return (
         <div>
             <h3>
@@ -106,4 +119,4 @@ export function Todolist(props: TodolistPropsType) {
             </div>
         </div>
     );
-}
+})
