@@ -71,16 +71,8 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
             </h3>
             <AddItemForm addItem={addTask}/>
             <ul style={{listStyle: 'none', paddingLeft: '0'}}>
-
                 {
                     tasksForTodolist.map(t => {
-
-
-
-
-
-
-
                         return (
                             <Task
                             key={t.id}

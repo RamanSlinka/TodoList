@@ -16,9 +16,11 @@ export const Task = React.memo((props:TaskPropsType) => {
     const changeTaskTitle = (e:ChangeEvent<HTMLInputElement>) => {
         props.changeTaskStatus(props.task.id, e.currentTarget.checked)
     }
+
     const changeTaskStatus = (newTitle: string) => {
 props.changeTaskTitle(props.task.id, newTitle)
     }
+
     const removeTask = () => {
 props.removeTask(props.task.id)
     }
@@ -30,7 +32,8 @@ props.removeTask(props.task.id)
                 checked={props.task.isDone}
                 onChange={changeTaskStatus}
                 color={'primary'}/>
-            <EditableSpan title={props.task.title} changeTitle={changeTaskTitle}/>
+            <EditableSpan value={props.task.title}
+                          changeTitle={changeTaskTitle}/>
             <IconButton onClick={removeTask}>
                 <Delete/>
             </IconButton>
