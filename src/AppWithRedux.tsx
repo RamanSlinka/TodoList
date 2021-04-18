@@ -62,10 +62,10 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
     let tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
    let dispatch  = useDispatch()
 
-    const removeTask = (taskId: string, todolistId: string) => {
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
         let action = removeTaskAC(taskId, todolistId)
         dispatch(action)
-    }
+    }, [])
 
     const addTask = useCallback( (title: string, todoListID: string) => {
         /* const newTask: TaskType = {
@@ -142,9 +142,6 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
     //UI:
 
     const todoListComponents = todoLists.map(tl => {
-        let allTodolistTasks = tasks[tl.id]
-        let tasksForTodolist = allTodolistTasks;
-
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={10} style={{padding: '20px'}}>
@@ -152,8 +149,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
                             id={tl.id}
                             title={tl.title}
                             filter={tl.filter}
-                            tasks={tasksForTodolist}
-                            //tasks={tasks[tl.id]}
+                            tasks={tasks[tl.id]}
                             removeTodolist={removeTodolist}
                             addTask={addTask}
                             removeTask={removeTask}

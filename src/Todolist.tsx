@@ -27,52 +27,24 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id)
 
     const setAllFilter = useCallback(
-        () => { props.changeTodoListFilter('all', props.id)}, [])
+        () => {
+            props.changeTodoListFilter('all', props.id)
+        }, [])
     const setActiveFilter = useCallback(
-        () => { props.changeTodoListFilter('active', props.id) }, [])
+        () => {
+            props.changeTodoListFilter('active', props.id)
+        }, [])
     const setCompletedFilter = useCallback(
-        () => { props.changeTodoListFilter('completed', props.id)}, [])
+        () => {
+            props.changeTodoListFilter('completed', props.id)
+        }, [])
 
     const removeTodoList = () => props.removeTodolist(props.id)
-    const tasks = props.tasks.map(t => {
-        const removeTask = () => {
-            props.removeTask(t.id, props.id)
-        }
-
-        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
-            props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
-
-        const changeTaskTitle = (newTitle: string) =>
-            props.changeTaskTitle(t.id, newTitle, props.id)
 
 
+    let allTodolistTasks = props.tasks
+    let tasksForTodolist = allTodolistTasks;
 
-
-        return (
-            <li key={t.id} className={t.isDone ? "is-done" : ''}>
-                <Checkbox
-                    checked={t.isDone}
-                    onChange={changeTaskStatus}
-                    color={'primary'}
-                />
-
-               {/* <input
-                    type="checkbox"
-                    checked={t.isDone}
-                    onChange={changeTaskStatus}/>*/}
-
-                <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
-
-
-                <IconButton onClick={removeTask}>
-                    <Delete/>
-                </IconButton>
-            </li>
-        )
-    })
-
-
-    let tasksForTodolist = props.tasks
     if (props.filter === 'active') {
         tasksForTodolist = props.tasks.filter(t => t.isDone === false)
     }
@@ -83,19 +55,45 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
     return (
         <div>
             <h3>
-
-            <EditableSpan title={props.title} changeTitle={changeTodoListTitle} />
-
-               <IconButton onClick={removeTodoList}>
-                   <Delete/>
-               </IconButton>
-
+                <EditableSpan title={props.title} changeTitle={changeTodoListTitle}/>
+                <IconButton onClick={removeTodoList}>
+                    <Delete/>
+                </IconButton>
             </h3>
-
             <AddItemForm addItem={addTask}/>
+            <ul style={{listStyle: 'none', paddingLeft: '0'}}>
 
-            <ul style={{listStyle: 'none', paddingLeft: '0' }}>
-                {tasks}
+                {
+                    tasksForTodolist.map(t => {
+                        const removeTask = () => {
+                            props.removeTask(t.id, props.id)
+                        }
+
+                        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
+                            props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
+
+                        const changeTaskTitle = (newTitle: string) =>
+                            props.changeTaskTitle(t.id, newTitle, props.id)
+
+
+                        return (
+                            <li key={t.id} className={t.isDone ? "is-done" : ''}>
+                                <Checkbox
+                                    checked={t.isDone}
+                                    onChange={changeTaskStatus}
+                                    color={'primary'}/>
+                                {/* <input
+                    type="checkbox"
+                    checked={t.isDone}
+                    onChange={changeTaskStatus}/>*/}
+                                <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
+                                <IconButton onClick={removeTask}>
+                                    <Delete/>
+                                </IconButton>
+                            </li>
+                        )
+                    })
+                }
             </ul>
             <div>
                 <Button
