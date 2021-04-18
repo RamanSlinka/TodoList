@@ -65,7 +65,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
     const removeTask = useCallback((taskId: string, todolistId: string) => {
         let action = removeTaskAC(taskId, todolistId)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const addTask = useCallback( (title: string, todoListID: string) => {
         /* const newTask: TaskType = {
@@ -78,7 +78,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
          setTasks({...tasks})*/
         let action = addTaskAC(title, todoListID)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const changeTaskStatus = useCallback((taskID: string, newIsDoneValue: boolean, todoListID: string) => {
      /*   const todoListTasks = tasks[todoListID]
@@ -89,7 +89,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
         }*/
         let action = changeTaskStatusAC(taskID, newIsDoneValue, todoListID)
         dispatch(action)
-    },[])
+    },[dispatch])
 
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
        /* const todoListTasks = tasks[todoListID]
@@ -100,7 +100,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
         }*/
         let action = changeTaskTitleAC(taskID, newTitle, todoListID)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const changeTodoListFilter = useCallback((newFilterValue: FilterValuesType, todoListID: string) => {
        /* const todoList = todoLists.find(tl => tl.id === todoListID)
@@ -110,7 +110,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
         }*/
         let action = ChangeTodoListFilterAC(todoListID, newFilterValue )
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const changeTodoListTitle = useCallback( (newTitle: string, todoListID: string) => {
         /*const todoList = todoLists.find(tl => tl.id === todoListID)
@@ -120,14 +120,14 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
         }*/
         let action = ChangeTodoListTitleAC(newTitle, todoListID)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const removeTodolist = useCallback( (todoListID: string) => {
        /* setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]*/
         let action = RemoveTodolistAC(todoListID)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
        /* const newTodoListID = v1()
@@ -136,7 +136,7 @@ let todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.tod
         setTasks({...tasks, [newTodoListID]: []})*/
         let action = AddTodoListAC(title)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
 
     //UI:

@@ -23,21 +23,18 @@ type TodolistPropsType = {
 export const Todolist = React.memo((props: TodolistPropsType) => {
     console.log('Todolist clicked')
 
-    const addTask = (title: string) => props.addTask(title, props.id)
-    const changeTodoListTitle = (title: string) => props.changeTodoListTitle(title, props.id)
+    const addTask = useCallback((title: string) =>
+        props.addTask(title, props.id), [props.id, props.addTask])
 
-    const setAllFilter = useCallback(
-        () => {
-            props.changeTodoListFilter('all', props.id)
-        }, [])
-    const setActiveFilter = useCallback(
-        () => {
-            props.changeTodoListFilter('active', props.id)
-        }, [])
-    const setCompletedFilter = useCallback(
-        () => {
-            props.changeTodoListFilter('completed', props.id)
-        }, [])
+    const changeTodoListTitle = useCallback((title: string) =>
+        props.changeTodoListTitle(title, props.id), [props.changeTodoListTitle,  props.id])
+
+    const setAllFilter = useCallback(() => {
+        props.changeTodoListFilter('all', props.id)}, [props.id])
+    const setActiveFilter = useCallback(() => {
+            props.changeTodoListFilter('active', props.id)}, [props.id])
+    const setCompletedFilter = useCallback(() => {
+            props.changeTodoListFilter('completed', props.id)}, [props.id])
 
     const removeTodoList = () => props.removeTodolist(props.id)
 
@@ -72,8 +69,9 @@ export const Todolist = React.memo((props: TodolistPropsType) => {
                         const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) =>
                             props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
 
-                        const changeTaskTitle = (newTitle: string) =>
+                        const changeTaskTitle = (newTitle: string) => {
                             props.changeTaskTitle(t.id, newTitle, props.id)
+                        }
 
 
                         return (
