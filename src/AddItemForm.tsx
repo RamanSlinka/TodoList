@@ -11,17 +11,16 @@ type AddItemFormPropsType = {
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     console.log('AddItemForm clicked')
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<boolean >(false)
 
 
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
-      //  setError(false)
+        setError(false)
     }
     const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error !== null) {
-            //@ts-ignore
-            setError(null)
+        if (error ) {
+            setError(false)
         }
         if (e.key === 'Enter') {
             addItem()
